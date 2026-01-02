@@ -29,7 +29,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; }
         .modal-content { background: white; width: 95%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; margin: 20px; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
-        .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--coda-orange); background: #fff; }
         .voucher-section { background: #faf5ff; border: 1px dashed var(--voucher-purple); padding: 10px; border-radius: 8px; margin: 10px 0; }
         .voucher-input { width: 70%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; outline: none; }
         .apply-btn { width: 25%; padding: 8px; background: var(--voucher-purple); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; }
@@ -51,7 +51,6 @@
 
 <div class="container">
     <input type="text" class="search-bar" id="gameSearch" placeholder="Search for a game..." onkeyup="doSearch()">
-    
     <div class="nav-grid">
         <div class="game-card" onclick="openModal('MLBB')"><span class="icon">⚔️</span><div class="name">Mobile Legends</div></div>
         <div class="game-card" onclick="openModal('DOTA2')"><span class="icon">🖱️</span><div class="name">Dota 2</div></div>
@@ -66,13 +65,11 @@
             <span>Customer Reviews</span>
             <a href="https://wa.me/639535992881?text=Hi Judie! I want to leave a review for Games Fires:" target="_blank" class="review-btn">Leave a Review</a>
         </div>
-        
         <div class="feedback-item">
             <div class="stars">⭐⭐⭐⭐⭐</div>
             <p style="font-size: 13px;"><b>"Very fast transaction! Received my diamonds in 2 minutes. Legit seller!"</b></p>
             <p style="font-size: 11px; color: #888;">- Mark S. (MLBB Buyer)</p>
         </div>
-
         <div class="feedback-item">
             <div class="stars">⭐⭐⭐⭐⭐</div>
             <p style="font-size: 13px;"><b>"Trusted and cheap prices. Highly recommended for gamers."</b></p>
@@ -86,29 +83,29 @@
 <div class="modal-overlay" id="topupModal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h2 id="displayTitle">Top Up</h2>
+        <h2 id="displayTitle" style="margin-bottom: 10px;">Top Up</h2>
 
-        <input type="text" id="userIdField" class="input-box" placeholder="Enter Player ID / Server">
-        
+        <div id="packageGrid" class="pkg-grid"></div>
+
         <div class="voucher-section">
             <input type="text" id="voucherCode" class="voucher-input" placeholder="Voucher Code">
             <button class="apply-btn" onclick="applyVoucher()">Apply</button>
             <p id="voucherMsg" style="font-size: 10px; margin-top: 5px;"></p>
         </div>
 
-        <div id="packageGrid" class="pkg-grid"></div>
-        
         <div class="qr-area">
-            <p style="font-size: 12px; margin-bottom: 10px;"><b>Scan to Pay via GCash</b></p>
+            <p style="font-size: 12px; margin-bottom: 5px; color: var(--coda-orange); text-align: left;"><b>1. Enter Player ID & Server:</b></p>
+            <input type="text" id="finalIdField" class="input-box" placeholder="Example: 12345678 (1234)">
+            
+            <p style="font-size: 12px; margin: 15px 0 10px;"><b>2. Scan to Pay via GCash:</b></p>
             <img src="WhatsApp Image 2026-01-02 at 10.35.35 AM.jpeg" alt="GCash QR">
             <p style="font-size: 11px; margin-top: 10px; color: #666;">Account: JUDIE DANDAN<br>0953 599 2881</p>
         </div>
 
         <div class="terms-box">
             <b>Terms & Conditions:</b><br>
-            • Please double-check your Player ID.<br>
-            • No refund for wrong ID provided.<br>
-            • All sales are final once processed.
+            • Double-check your Player ID. No refunds for mistakes.<br>
+            • All sales final once processed.
         </div>
 
         <button class="pay-btn" onclick="handleOrder()">I have Paid - Chat Judie</button>
@@ -134,7 +131,7 @@
         isVoucherApplied = false;
         document.getElementById('voucherMsg').innerText = "";
         document.getElementById('voucherCode').value = "";
-        document.getElementById('userIdField').value = ""; // Clears the ID box
+        document.getElementById('finalIdField').value = ""; 
         document.getElementById('displayTitle').innerText = db[k].n;
         const grid = document.getElementById('packageGrid'); grid.innerHTML = "";
         db[k].items.forEach(i => {
@@ -167,17 +164,14 @@
     }
 
     function handleOrder() {
-        const pID = document.getElementById('userIdField').value;
+        const pID = document.getElementById('finalIdField').value;
         const sel = document.querySelector('.pkg-item.selected');
-        
         if(!pID) return alert("Please enter your Player ID / Server!");
         if(!sel) return alert("Please select a package!");
         
         const pkgText = sel.innerText.replace('\n', ' ');
         const vText = isVoucherApplied ? "%0A*VOUCHER APPLIED: NEWYEAR2026 (-₱5)*" : "";
-        
         const msg = `GAMES FIRES ORDER%0A%0AGame: ${db[currentKey].n}%0APlayer ID/Server: ${pID}%0AOrder: ${pkgText}${vText}%0A%0A*I have scanned your QR and paid! Please process.*`;
-        
         window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
     }
 </script>
