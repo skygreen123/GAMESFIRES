@@ -26,21 +26,38 @@
         .stars { color: #f6ad55; font-size: 14px; }
         .review-btn { background: var(--coda-orange); color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: 600; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; }
-        .modal-content { background: white; width: 95%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; margin: 20px; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
+        /* MODAL UPDATED TO 500x700 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { 
+            background: white; 
+            width: 500px; 
+            height: 700px; 
+            padding: 25px; 
+            border-radius: 20px; 
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Allows scrolling if content is long */
+        }
+        
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; z-index: 10; }
         .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--coda-orange); background: #fff; }
-        .voucher-section { background: #faf5ff; border: 1px dashed var(--voucher-purple); padding: 10px; border-radius: 8px; margin: 10px 0; }
+        .voucher-section { background: #faf5ff; border: 1px dashed var(--voucher-purple); padding: 10px; border-radius: 8px; margin: 10px 0; flex-shrink: 0; }
         .voucher-input { width: 70%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; outline: none; }
         .apply-btn { width: 25%; padding: 8px; background: var(--voucher-purple); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; flex-shrink: 0; }
         .pkg-item { border: 1px solid #eee; padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 13px; }
         .pkg-item.selected { border-color: var(--coda-orange); background: #fff5ee; }
-        .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; }
-        .qr-area img { width: 100%; max-width: 200px; border-radius: 10px; }
-        .terms-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 11px; color: #c53030; }
-        .pay-btn { width: 100%; background: var(--success-green); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
+        .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; flex-shrink: 0; }
+        .qr-area img { width: 100%; max-width: 180px; border-radius: 10px; }
+        .terms-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 11px; color: #c53030; flex-shrink: 0; }
+        .pay-btn { width: 100%; background: var(--success-green); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: auto; flex-shrink: 0; }
         footer { text-align: center; padding: 30px; font-size: 10px; color: #aaa; letter-spacing: 1px; }
+
+        /* Responsive check for small phones */
+        @media (max-width: 550px) {
+            .modal-content { width: 95%; height: 90vh; }
+        }
     </style>
 </head>
 <body>
@@ -117,6 +134,7 @@
     let currentKey = "";
     let isVoucherApplied = false;
 
+    // YOUR PRICE LIST
     const db = {
         'MLBB': { n: "Mobile Legends", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"500 💎",p:"₱550"},{a:"1000 💎",p:"₱1,100"}]},
         'DOTA2': { n: "Dota 2 Wallet", items: [{a:"₱50",p:"₱65"},{a:"₱100",p:"₱125"},{a:"₱500",p:"₱585"}]},
