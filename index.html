@@ -6,7 +6,7 @@
     <title>Games Fires | Official Top Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --coda-orange: #ff6600; --success-green: #25D366; --voucher-purple: #805ad5; --bg-gray: #f4f7f9; }
+        :root { --coda-orange: #ff6600; --success-green: #25D366; --bg-gray: #f4f7f9; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         body { background-color: var(--bg-gray); color: #333; line-height: 1.6; }
         header { background: #fff; padding: 20px; text-align: center; border-bottom: 2px solid var(--coda-orange); position: sticky; top: 0; z-index: 100; }
@@ -14,10 +14,11 @@
         .logo-text span { color: var(--coda-orange); }
         .container { width: 95%; max-width: 1200px; margin: 20px auto; min-height: 80vh; }
         .search-bar { width: 100%; max-width: 500px; padding: 15px; border-radius: 50px; border: 1px solid #ddd; margin: 10px auto 30px; display: block; outline: none; }
+        
         .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
         .game-card { background: white; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
         .game-card:hover { transform: translateY(-5px); border-color: var(--coda-orange); }
-        .game-card .icon { font-size: 30px; display: block; margin-bottom: 10px; }
+        .game-card .icon { font-size: 35px; display: block; margin-bottom: 10px; }
         .game-card .name { font-size: 11px; font-weight: 600; text-transform: uppercase; }
         
         /* MODAL 500x700 */
@@ -35,9 +36,7 @@
         .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; }
         .qr-area img { width: 100%; max-width: 180px; border-radius: 10px; }
         
-        /* SAFETY CHECKBOX STYLE */
         .safety-box { background: #fff9db; padding: 10px; border-radius: 8px; margin: 10px 0; border: 1px solid #f59e0b; display: flex; align-items: center; gap: 10px; }
-        
         .pay-btn { width: 100%; background: #ccc; color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: not-allowed; }
         footer { text-align: center; padding: 30px; font-size: 10px; color: #aaa; }
     </style>
@@ -48,7 +47,8 @@
 
 <div class="container">
     <input type="text" class="search-bar" id="gameSearch" placeholder="Search for a game..." onkeyup="doSearch()">
-    <div class="nav-grid" id="gameGrid"></div>
+    <div class="nav-grid" id="gameGrid">
+        </div>
 </div>
 
 <footer>CREATED BY: JUDIE DANDAN</footer>
@@ -80,18 +80,35 @@
 <script>
     const adminPhone = "639535992881"; 
     let currentKey = "";
+
+    // UPDATED GAME LIST
     const db = {
-        'MLBB': { n: "Mobile Legends", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"500 💎",p:"₱550"}]},
-        'ROBLOX': { n: "Robux", items: [{a:"80 R$",p:"₱85"},{a:"400 R$",p:"₱345"}]}
+        'MLBB': { n: "Mobile Legends", i: "⚔️", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"284 💎",p:"₱250"}]},
+        'HOK': { n: "Honor of Kings", i: "👑", items: [{a:"16 Tokens",p:"₱20"},{a:"80 Tokens",p:"₱85"},{a:"Weekly Pass",p:"₱110"}]},
+        'ROBLOX': { n: "Robux", i: "🧱", items: [{a:"80 R$",p:"₱85"},{a:"400 R$",p:"₱345"},{a:"800 R$",p:"₱650"}]},
+        'CODM': { n: "COD Mobile", i: "🔫", items: [{a:"80 CP",p:"₱65"},{a:"400 CP",p:"₱315"},{a:"Weekly Pass",p:"₱120"}]},
+        'PUBG': { n: "PUBG Mobile", i: "🪂", items: [{a:"60 UC",p:"₱70"},{a:"325 UC",p:"₱345"}]},
+        'DOTA2': { n: "Dota 2 Wallet", i: "🖱️", items: [{a:"₱50 Steam",p:"₱65"},{a:"₱100 Steam",p:"₱125"}]}
     };
 
     function renderGames() {
         const grid = document.getElementById('gameGrid');
+        grid.innerHTML = "";
         for (const key in db) {
-            grid.innerHTML += `<div class="game-card" onclick="openModal('${key}')"><span class="icon">🎮</span><div class="name">${db[key].n}</div></div>`;
+            grid.innerHTML += `
+                <div class="game-card" onclick="openModal('${key}')">
+                    <span class="icon">${db[key].i}</span>
+                    <div class="name">${db[key].n}</div>
+                </div>`;
         }
     }
     renderGames();
+
+    function doSearch() {
+        let q = document.getElementById('gameSearch').value.toLowerCase();
+        let cards = document.getElementsByClassName('game-card');
+        for(let c of cards) c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
+    }
 
     function openModal(k) {
         currentKey = k;
@@ -120,7 +137,7 @@
     function handleOrder() {
         const pID = document.getElementById('finalIdField').value;
         const sel = document.querySelector('.pkg-item.selected');
-        if(!pID || !sel) return alert("Fill in your ID and select a package!");
+        if(!pID || !sel) return alert("Please enter your Player ID and select a package!");
         
         const msg = `GAMES FIRES ORDER%0A%0AGame: ${db[currentKey].n}%0APlayer ID/Server: ${pID}%0AOrder: ${sel.innerText.replace('\n', ' ')}%0A%0A*I CONFIRM I HAVE PAID VIA GCASH*`;
         window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
