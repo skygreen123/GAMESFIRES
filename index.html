@@ -20,79 +20,35 @@
         .game-card .icon { font-size: 30px; display: block; margin-bottom: 10px; }
         .game-card .name { font-size: 11px; font-weight: 600; text-transform: uppercase; }
         
-        .feedback-section { margin-top: 50px; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .feedback-title { font-weight: 600; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .feedback-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .stars { color: #f6ad55; font-size: 14px; }
-        .review-btn { background: var(--coda-orange); color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: 600; }
-
-        /* MODAL UPDATED TO 500x700 */
+        /* MODAL 500x700 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { 
-            background: white; 
-            width: 500px; 
-            height: 700px; 
-            padding: 25px; 
-            border-radius: 20px; 
-            position: relative; 
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto; /* Allows scrolling if content is long */
+            background: white; width: 500px; height: 700px; padding: 25px; border-radius: 20px; 
+            position: relative; display: flex; flex-direction: column; overflow-y: auto; 
         }
         
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; z-index: 10; }
-        .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--coda-orange); background: #fff; }
-        .voucher-section { background: #faf5ff; border: 1px dashed var(--voucher-purple); padding: 10px; border-radius: 8px; margin: 10px 0; flex-shrink: 0; }
-        .voucher-input { width: 70%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; outline: none; }
-        .apply-btn { width: 25%; padding: 8px; background: var(--voucher-purple); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; flex-shrink: 0; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
+        .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 2px solid var(--coda-orange); }
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
         .pkg-item { border: 1px solid #eee; padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 13px; }
         .pkg-item.selected { border-color: var(--coda-orange); background: #fff5ee; }
-        .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; flex-shrink: 0; }
+        .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; }
         .qr-area img { width: 100%; max-width: 180px; border-radius: 10px; }
-        .terms-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 11px; color: #c53030; flex-shrink: 0; }
-        .pay-btn { width: 100%; background: var(--success-green); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: auto; flex-shrink: 0; }
-        footer { text-align: center; padding: 30px; font-size: 10px; color: #aaa; letter-spacing: 1px; }
-
-        /* Responsive check for small phones */
-        @media (max-width: 550px) {
-            .modal-content { width: 95%; height: 90vh; }
-        }
+        
+        /* SAFETY CHECKBOX STYLE */
+        .safety-box { background: #fff9db; padding: 10px; border-radius: 8px; margin: 10px 0; border: 1px solid #f59e0b; display: flex; align-items: center; gap: 10px; }
+        
+        .pay-btn { width: 100%; background: #ccc; color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: not-allowed; }
+        footer { text-align: center; padding: 30px; font-size: 10px; color: #aaa; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-text">GAMES<span>FIRES</span></div>
-</header>
+<header><div class="logo-text">GAMES<span>FIRES</span></div></header>
 
 <div class="container">
     <input type="text" class="search-bar" id="gameSearch" placeholder="Search for a game..." onkeyup="doSearch()">
-    <div class="nav-grid">
-        <div class="game-card" onclick="openModal('MLBB')"><span class="icon">⚔️</span><div class="name">Mobile Legends</div></div>
-        <div class="game-card" onclick="openModal('DOTA2')"><span class="icon">🖱️</span><div class="name">Dota 2</div></div>
-        <div class="game-card" onclick="openModal('ROBLOX')"><span class="icon">🧱</span><div class="name">Roblox</div></div>
-        <div class="game-card" onclick="openModal('PUBG')"><span class="icon">🪂</span><div class="name">PUBG Mobile</div></div>
-        <div class="game-card" onclick="openModal('HOK')"><span class="icon">👑</span><div class="name">Honor of Kings</div></div>
-        <div class="game-card" onclick="openModal('CODM')"><span class="icon">🔫</span><div class="name">COD Mobile</div></div>
-    </div>
-
-    <div class="feedback-section">
-        <div class="feedback-title">
-            <span>Customer Reviews</span>
-            <a href="https://wa.me/639535992881?text=Hi Judie! I want to leave a review for Games Fires:" target="_blank" class="review-btn">Leave a Review</a>
-        </div>
-        <div class="feedback-item">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p style="font-size: 13px;"><b>"Very fast transaction! Received my diamonds in 2 minutes. Legit seller!"</b></p>
-            <p style="font-size: 11px; color: #888;">- Mark S. (MLBB Buyer)</p>
-        </div>
-        <div class="feedback-item">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p style="font-size: 13px;"><b>"Trusted and cheap prices. Highly recommended for gamers."</b></p>
-            <p style="font-size: 11px; color: #888;">- Angela G. (Roblox Buyer)</p>
-        </div>
-    </div>
+    <div class="nav-grid" id="gameGrid"></div>
 </div>
 
 <footer>CREATED BY: JUDIE DANDAN</footer>
@@ -100,18 +56,11 @@
 <div class="modal-overlay" id="topupModal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h2 id="displayTitle" style="margin-bottom: 10px;">Top Up</h2>
-
+        <h2 id="displayTitle">Top Up</h2>
         <div id="packageGrid" class="pkg-grid"></div>
 
-        <div class="voucher-section">
-            <input type="text" id="voucherCode" class="voucher-input" placeholder="Voucher Code">
-            <button class="apply-btn" onclick="applyVoucher()">Apply</button>
-            <p id="voucherMsg" style="font-size: 10px; margin-top: 5px;"></p>
-        </div>
-
         <div class="qr-area">
-            <p style="font-size: 12px; margin-bottom: 5px; color: var(--coda-orange); text-align: left;"><b>1. Enter Player ID & Server:</b></p>
+            <p style="font-size: 12px; text-align: left;"><b>1. Enter Player ID & Server:</b></p>
             <input type="text" id="finalIdField" class="input-box" placeholder="Example: 12345678 (1234)">
             
             <p style="font-size: 12px; margin: 15px 0 10px;"><b>2. Scan to Pay via GCash:</b></p>
@@ -119,38 +68,36 @@
             <p style="font-size: 11px; margin-top: 10px; color: #666;">Account: JUDIE DANDAN<br>0953 599 2881</p>
         </div>
 
-        <div class="terms-box">
-            <b>Terms & Conditions:</b><br>
-            • Double-check your Player ID. No refunds for mistakes.<br>
-            • All sales final once processed.
+        <div class="safety-box">
+            <input type="checkbox" id="scanCheck" onchange="togglePayButton()">
+            <label for="scanCheck" style="font-size: 11px; font-weight: 600; color: #92400e;">I have scanned the QR and paid the exact amount.</label>
         </div>
 
-        <button class="pay-btn" onclick="handleOrder()">I have Paid - Chat Judie</button>
+        <button class="pay-btn" id="mainPayBtn" onclick="handleOrder()" disabled>I have Paid - Chat Judie</button>
     </div>
 </div>
 
 <script>
     const adminPhone = "639535992881"; 
     let currentKey = "";
-    let isVoucherApplied = false;
-
-    // YOUR PRICE LIST
     const db = {
-        'MLBB': { n: "Mobile Legends", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"500 💎",p:"₱550"},{a:"1000 💎",p:"₱1,100"}]},
-        'DOTA2': { n: "Dota 2 Wallet", items: [{a:"₱50",p:"₱65"},{a:"₱100",p:"₱125"},{a:"₱500",p:"₱585"}]},
-        'ROBLOX': { n: "Robux", items: [{a:"80 R$",p:"₱85"},{a:"400 R$",p:"₱345"},{a:"1700 R$",p:"₱1350"}]},
-        'PUBG': { n: "PUBG Mobile", items: [{a:"60 UC",p:"₱70"},{a:"325 UC",p:"₱345"}]},
-        'HOK': { n: "Honor of Kings", items: [{a:"16 Tokens",p:"₱20"},{a:"80 Tokens",p:"₱85"},{a:"Weekly Pass",p:"₱110"}]},
-        'CODM': { n: "COD Mobile", items: [{a:"80 CP",p:"₱65"},{a:"400 CP",p:"₱315"},{a:"800 CP",p:"₱630"}]}
+        'MLBB': { n: "Mobile Legends", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"500 💎",p:"₱550"}]},
+        'ROBLOX': { n: "Robux", items: [{a:"80 R$",p:"₱85"},{a:"400 R$",p:"₱345"}]}
     };
+
+    function renderGames() {
+        const grid = document.getElementById('gameGrid');
+        for (const key in db) {
+            grid.innerHTML += `<div class="game-card" onclick="openModal('${key}')"><span class="icon">🎮</span><div class="name">${db[key].n}</div></div>`;
+        }
+    }
+    renderGames();
 
     function openModal(k) {
         currentKey = k;
-        isVoucherApplied = false;
-        document.getElementById('voucherMsg').innerText = "";
-        document.getElementById('voucherCode').value = "";
-        document.getElementById('finalIdField').value = ""; 
         document.getElementById('displayTitle').innerText = db[k].n;
+        document.getElementById('scanCheck').checked = false;
+        togglePayButton();
         const grid = document.getElementById('packageGrid'); grid.innerHTML = "";
         db[k].items.forEach(i => {
             const d = document.createElement('div'); d.className = "pkg-item";
@@ -160,36 +107,22 @@
         document.getElementById('topupModal').style.display = 'flex';
     }
 
-    function applyVoucher() {
-        const code = document.getElementById('voucherCode').value.toUpperCase();
-        const msg = document.getElementById('voucherMsg');
-        if(code === "NEWYEAR2026") {
-            isVoucherApplied = true;
-            msg.style.color = "green";
-            msg.innerText = "✓ Voucher Applied! ₱5 Discount included.";
-        } else {
-            isVoucherApplied = false;
-            msg.style.color = "red";
-            msg.innerText = "× Invalid Voucher Code";
-        }
+    function togglePayButton() {
+        const isChecked = document.getElementById('scanCheck').checked;
+        const btn = document.getElementById('mainPayBtn');
+        btn.disabled = !isChecked;
+        btn.style.background = isChecked ? "#25D366" : "#ccc";
+        btn.style.cursor = isChecked ? "pointer" : "not-allowed";
     }
 
     function closeModal() { document.getElementById('topupModal').style.display = 'none'; }
-    function doSearch() {
-        let q = document.getElementById('gameSearch').value.toLowerCase();
-        let cards = document.getElementsByClassName('game-card');
-        for(let c of cards) c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
-    }
 
     function handleOrder() {
         const pID = document.getElementById('finalIdField').value;
         const sel = document.querySelector('.pkg-item.selected');
-        if(!pID) return alert("Please enter your Player ID / Server!");
-        if(!sel) return alert("Please select a package!");
+        if(!pID || !sel) return alert("Fill in your ID and select a package!");
         
-        const pkgText = sel.innerText.replace('\n', ' ');
-        const vText = isVoucherApplied ? "%0A*VOUCHER APPLIED: NEWYEAR2026 (-₱5)*" : "";
-        const msg = `GAMES FIRES ORDER%0A%0AGame: ${db[currentKey].n}%0APlayer ID/Server: ${pID}%0AOrder: ${pkgText}${vText}%0A%0A*I have scanned your QR and paid! Please process.*`;
+        const msg = `GAMES FIRES ORDER%0A%0AGame: ${db[currentKey].n}%0APlayer ID/Server: ${pID}%0AOrder: ${sel.innerText.replace('\n', ' ')}%0A%0A*I CONFIRM I HAVE PAID VIA GCASH*`;
         window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
     }
 </script>
