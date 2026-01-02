@@ -4,172 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Games Fires | Official Top Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #f4f7f9;
-            --dark-btn: #1a1a1a;
-            --success-color: #25D366;
-            --coda-orange: #ff6600;
-            --text-main: #333;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--bg-color); color: var(--text-main); }
-        
-        header { background: #fff; padding: 25px; text-align: center; border-bottom: 2px solid var(--coda-orange); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo-text { font-size: 32px; font-weight: 600; letter-spacing: -1px; }
+        :root { --coda-orange: #ff6600; --success-green: #25D366; --voucher-purple: #805ad5; --bg-gray: #f4f7f9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-gray); color: #333; line-height: 1.6; }
+        header { background: #fff; padding: 20px; text-align: center; border-bottom: 2px solid var(--coda-orange); position: sticky; top: 0; z-index: 100; }
+        .logo-text { font-size: 28px; font-weight: 600; }
         .logo-text span { color: var(--coda-orange); }
-
-        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding: 20px; min-height: 80vh; }
-        .search-bar { width: 100%; max-width: 600px; padding: 18px 25px; border-radius: 50px; border: 1px solid #ddd; outline: none; margin: 20px auto; display: block; background: #fff; }
-
-        .section-title { font-size: 18px; font-weight: 600; margin: 30px 0 15px; padding-left: 15px; border-left: 5px solid var(--coda-orange); }
-        .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .container { width: 95%; max-width: 1200px; margin: 20px auto; min-height: 80vh; }
+        .search-bar { width: 100%; max-width: 500px; padding: 15px; border-radius: 50px; border: 1px solid #ddd; margin: 10px auto 30px; display: block; outline: none; }
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .game-card { background: white; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--coda-orange); }
+        .game-card .icon { font-size: 30px; display: block; margin-bottom: 10px; }
+        .game-card .name { font-size: 11px; font-weight: 600; text-transform: uppercase; }
         
-        .game-card { background: white; border-radius: 12px; padding: 25px 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--coda-orange); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .game-card .icon { font-size: 35px; margin-bottom: 10px; display: block; }
-        .game-card .name { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #444; }
+        /* FEEDBACK SECTION */
+        .feedback-section { margin-top: 50px; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .feedback-title { font-weight: 600; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .feedback-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .stars { color: #f6ad55; font-size: 14px; }
+        .review-btn { background: var(--coda-orange); color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: 600; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
-        .modal-content { background: white; width: 95%; max-width: 550px; padding: 30px; border-radius: 20px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: #bbb; }
-
-        .step { font-size: 11px; font-weight: 700; color: var(--coda-orange); margin-bottom: 8px; display: block; text-transform: uppercase; }
-        .input-box { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 14px; }
-        
-        .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px; }
-        .pkg-item { border: 1px solid #eee; padding: 12px; border-radius: 8px; cursor: pointer; text-align: center; background: #fafafa; transition: 0.2s; }
-        .pkg-item.selected { border-color: var(--coda-orange); background: #fff5ee; box-shadow: inset 0 0 0 1px var(--coda-orange); }
-        .pkg-item .amt { font-size: 13px; font-weight: 600; display: block; margin-bottom: 2px; }
-        .pkg-item .price { font-size: 11px; color: var(--coda-orange); font-weight: 700; }
-
-        .pay-btn { width: 100%; background: var(--success-color); color: white; border: none; padding: 18px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
-
-        footer { background: #fff; padding: 40px 20px; margin-top: 50px; text-align: center; border-top: 1px solid #eee; }
-        .creator-tag { font-size: 10px; color: #bbb; letter-spacing: 2px; text-transform: uppercase; margin-top: 20px; }
-        .creator-tag span { font-weight: 600; color: #999; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; }
+        .modal-content { background: white; width: 95%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; margin: 20px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
+        .input-box { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .voucher-section { background: #faf5ff; border: 1px dashed var(--voucher-purple); padding: 10px; border-radius: 8px; margin: 10px 0; }
+        .voucher-input { width: 70%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; outline: none; }
+        .apply-btn { width: 25%; padding: 8px; background: var(--voucher-purple); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .pkg-item { border: 1px solid #eee; padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 13px; }
+        .pkg-item.selected { border-color: var(--coda-orange); background: #fff5ee; }
+        .qr-area { background: #f0f4f8; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e0; }
+        .qr-area img { width: 100%; max-width: 200px; border-radius: 10px; }
+        .terms-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 11px; color: #c53030; }
+        .pay-btn { width: 100%; background: var(--success-green); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
+        footer { text-align: center; padding: 30px; font-size: 10px; color: #aaa; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-    <header id="top">
-        <div class="logo-text">GAMES<span>FIRES</span></div>
-    </header>
+<header>
+    <div class="logo-text">GAMES<span>FIRES</span></div>
+</header>
 
-    <div class="container">
-        <input type="text" class="search-bar" id="gameSearch" placeholder="Search for games (Budget to VIP)..." onkeyup="doSearch()">
-        
-        <div class="section-title">Store Selection</div>
-        <div class="nav-grid">
-            <div class="game-card" onclick="openModal('DOTA2')"><span class="icon">🖱️</span><div class="name">Dota 2</div></div>
-            <div class="game-card" onclick="openModal('MLBB')"><span class="icon">⚔️</span><div class="name">Mobile Legends</div></div>
-            <div class="game-card" onclick="openModal('BLOODSTRIKE')"><span class="icon">🎯</span><div class="name">Blood Strike</div></div>
-            <div class="game-card" onclick="openModal('PUBG')"><span class="icon">🪂</span><div class="name">PUBG Mobile</div></div>
-            <div class="game-card" onclick="openModal('CODM')"><span class="icon">🔫</span><div class="name">COD Mobile</div></div>
-            <div class="game-card" onclick="openModal('VALORANT')"><span class="icon">⌨️</span><div class="name">Valorant PC</div></div>
-            <div class="game-card" onclick="openModal('ROBLOX')"><span class="icon">🧱</span><div class="name">Roblox</div></div>
-            <div class="game-card" onclick="openModal('HOK')"><span class="icon">👑</span><div class="name">Honor of Kings</div></div>
-        </div>
+<div class="container">
+    <input type="text" class="search-bar" id="gameSearch" placeholder="Search for a game..." onkeyup="doSearch()">
+    
+    <div class="nav-grid">
+        <div class="game-card" onclick="openModal('MLBB')"><span class="icon">⚔️</span><div class="name">Mobile Legends</div></div>
+        <div class="game-card" onclick="openModal('DOTA2')"><span class="icon">🖱️</span><div class="name">Dota 2</div></div>
+        <div class="game-card" onclick="openModal('ROBLOX')"><span class="icon">🧱</span><div class="name">Roblox</div></div>
+        <div class="game-card" onclick="openModal('PUBG')"><span class="icon">🪂</span><div class="name">PUBG Mobile</div></div>
+        <div class="game-card" onclick="openModal('HOK')"><span class="icon">👑</span><div class="name">Honor of Kings</div></div>
+        <div class="game-card" onclick="openModal('CODM')"><span class="icon">🔫</span><div class="name">COD Mobile</div></div>
     </div>
 
-    <footer>
-        <p style="font-size: 12px; color: #888;">© 2026 Games Fires Top Up.</p>
-        <div class="creator-tag">Created by: <span>JUDIE DANDAN</span></div>
-    </footer>
+    <div class="feedback-section">
+        <div class="feedback-title">
+            <span>Customer Reviews</span>
+            <a href="https://wa.me/639535992881?text=Hi Judie! I want to leave a review for Games Fires:" target="_blank" class="review-btn">Leave a Review</a>
+        </div>
+        
+        <div class="feedback-item">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p style="font-size: 13px;"><b>"Very fast transaction! Received my diamonds in 2 minutes. Legit seller!"</b></p>
+            <p style="font-size: 11px; color: #888;">- Mark S. (MLBB Buyer)</p>
+        </div>
 
-    <div class="modal-overlay" id="topupModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 id="displayTitle" style="margin-bottom:20px;"></h2>
-            
-            <span class="step">1. Enter User ID</span>
-            <input type="text" id="userId" class="input-box" placeholder="Player ID / Account ID">
-
-            <span class="step">2. Select Recharge Amount</span>
-            <div id="packageGrid" class="pkg-grid"></div>
-
-            <button class="pay-btn" onclick="handleOrder()">Proceed to WhatsApp</button>
+        <div class="feedback-item">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p style="font-size: 13px;"><b>"Trusted and cheap prices. Highly recommended for gamers."</b></p>
+            <p style="font-size: 11px; color: #888;">- Angela G. (Roblox Buyer)</p>
         </div>
     </div>
+</div>
 
-    <script>
-        const adminPhone = "639535992881"; 
-        let currentKey = "";
+<footer>CREATED BY: JUDIE DANDAN</footer>
+
+<div class="modal-overlay" id="topupModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="displayTitle">Top Up</h2>
+        <input type="text" id="userId" class="input-box" placeholder="Enter Player ID / Server">
         
-        // Items updated with 10, 50, 100, 500, 1000 logic
-        const db = {
-            'DOTA2': { n: "Dota 2 Steam Wallet", items: [
-                {a:"₱50 Wallet",p:"₱65"}, {a:"₱100 Wallet",p:"₱125"}, 
-                {a:"₱500 Wallet",p:"₱585"}, {a:"₱1,000 Wallet",p:"₱1,150"}, {a:"₱5,000 Wallet",p:"₱5,600"}
-            ]},
-            'MLBB': { n: "Mobile Legends", items: [
-                {a:"11 Diamonds",p:"₱15"}, {a:"56 Diamonds",p:"₱65"}, 
-                {a:"112 Diamonds",p:"₱130"}, {a:"Weekly Pass",p:"₱99"},
-                {a:"500 Diamonds",p:"₱550"}, {a:"1000 Diamonds",p:"₱1,100"}, {a:"6042 Diamonds",p:"₱6,200"}
-            ]},
-            'BLOODSTRIKE': { n: "Blood Strike Gold", items: [
-                {a:"100 Gold",p:"₱65"}, {a:"500 Gold",p:"₱325"}, 
-                {a:"1000 Gold",p:"₱650"}, {a:"2500 Gold",p:"₱1,600"}, {a:"5000 Gold",p:"₱3,100"}
-            ]},
-            'PUBG': { n: "PUBG Mobile UC", items: [
-                {a:"60 UC",p:"₱70"}, {a:"325 UC",p:"₱345"}, 
-                {a:"660 UC",p:"₱680"}, {a:"1500 UC",p:"₱1,450"}, {a:"6000 UC",p:"₱5,500"}
-            ]},
-            'CODM': { n: "COD Mobile CP", items: [
-                {a:"80 CP",p:"₱65"}, {a:"400 CP",p:"₱315"}, 
-                {a:"800 CP",p:"₱630"}, {a:"2000 CP",p:"₱1,250"}, {a:"10000 CP",p:"₱5,900"}
-            ]},
-            'VALORANT': { n: "Valorant Points", items: [
-                {a:"125 VP",p:"₱75"}, {a:"475 VP",p:"₱250"}, 
-                {a:"1000 VP",p:"₱495"}, {a:"2050 VP",p:"₱850"}, {a:"11000 VP",p:"₱4,400"}
-            ]},
-            'ROBLOX': { n: "Robux", items: [
-                {a:"80 Robux",p:"₱85"}, {a:"400 Robux",p:"₱345"}, 
-                {a:"800 Robux",p:"₱660"}, {a:"1700 Robux",p:"₱1,350"}, {a:"10000 Robux",p:"₱7,500"}
-            ]},
-            'HOK': { n: "Honor of Kings", items: [
-                {a:"16 Tokens",p:"₱20"}, {a:"80 Tokens",p:"₱85"}, 
-                {a:"240 Tokens",p:"₱235"}, {a:"Weekly Pass",p:"₱110"}
-            ]}
-        };
+        <div class="voucher-section">
+            <input type="text" id="voucherCode" class="voucher-input" placeholder="Voucher Code">
+            <button class="apply-btn" onclick="applyVoucher()">Apply</button>
+            <p id="voucherMsg" style="font-size: 10px; margin-top: 5px;"></p>
+        </div>
 
-        function doSearch() {
-            let q = document.getElementById('gameSearch').value.toLowerCase();
-            let cards = document.getElementsByClassName('game-card');
-            for(let c of cards) c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
-        }
-
-        function openModal(k) {
-            currentKey = k; 
-            document.getElementById('displayTitle').innerText = db[k].n;
-            const g = document.getElementById('packageGrid'); g.innerHTML = "";
-            db[k].items.forEach(i => {
-                const d = document.createElement('div'); d.className = "pkg-item";
-                d.onclick = () => { 
-                    document.querySelectorAll('.pkg-item').forEach(p=>p.classList.remove('selected')); 
-                    d.classList.add('selected'); 
-                };
-                d.innerHTML = `<span class="amt">${i.a}</span><span class="price">${i.p}</span>`; 
-                g.appendChild(d);
-            });
-            document.getElementById('topupModal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('topupModal').style.display = 'none'; }
+        <div id="packageGrid" class="pkg-grid"></div>
         
-        function handleOrder() {
-            const id = document.getElementById('userId').value;
-            const sel = document.querySelector('.pkg-item.selected');
-            if(!id || !sel) return alert("Please select amount and enter ID!");
-            const pkg = sel.querySelector('.amt').innerText;
-            const price = sel.querySelector('.price').innerText;
-            const msg = `GAMES FIRES ORDER%0AGame: ${db[currentKey].n}%0AID: ${id}%0APackage: ${pkg}%0APrice: ${price}%0A%0AHi Judie! I want to buy this.`;
-            window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
-        }
+        <div class="qr-area">
+            <p style="font-size: 12px; margin-bottom: 10px;"><b>Scan to Pay via GCash</b></p>
+            <img src="WhatsApp Image 2026-01-02 at 10.35.35 AM.jpeg" alt="GCash QR">
+            <p style="font-size: 11px; margin-top: 10px; color: #666;">Account: JUDIE DANDAN<br>0953 599 2881</p>
+        </div>
 
-        window.onclick = function(e) { if(e.target.id == 'topupModal') closeModal(); }
-    </script>
+        <div class="terms-box">
+            <b>Terms & Conditions:</b><br>
+            • Please double-check your Player ID.<br>
+            • No refund for wrong ID provided.<br>
+            • All sales are final once processed.
+        </div>
+
+        <button class="pay-btn" onclick="handleOrder()">I have Paid - Chat Judie</button>
+    </div>
+</div>
+
+<script>
+    const adminPhone = "639535992881"; 
+    let currentKey = "";
+    let isVoucherApplied = false;
+
+    const db = {
+        'MLBB': { n: "Mobile Legends", items: [{a:"11 💎",p:"₱15"},{a:"56 💎",p:"₱65"},{a:"Weekly Pass",p:"₱99"},{a:"500 💎",p:"₱550"},{a:"1000 💎",p:"₱1,100"}]},
+        'DOTA2': { n: "Dota 2 Wallet", items: [{a:"₱50",p:"₱65"},{a:"₱100",p:"₱125"},{a:"₱500",p:"₱585"}]},
+        'ROBLOX': { n: "Robux", items: [{a:"80 R$",p:"₱85"},{a:"400 R$",p:"₱345"},{a:"1700 R$",p:"₱1350"}]},
+        'PUBG': { n: "PUBG Mobile", items: [{a:"60 UC",p:"₱70"},{a:"325 UC",p:"₱345"}]},
+        'HOK': { n: "Honor of Kings", items: [{a:"16 Tokens",p:"₱20"},{a:"80 Tokens",p:"₱85"},{a:"Weekly Pass",p:"₱110"}]},
+        'CODM': { n: "COD Mobile", items: [{a:"80 CP",p:"₱65"},{a:"400 CP",p:"₱315"},{a:"800 CP",p:"₱630"}]}
+    };
+
+    function openModal(k) {
+        currentKey = k;
+        isVoucherApplied = false;
+        document.getElementById('voucherMsg').innerText = "";
+        document.getElementById('voucherCode').value = "";
+        document.getElementById('displayTitle').innerText = db[k].n;
+        const grid = document.getElementById('packageGrid'); grid.innerHTML = "";
+        db[k].items.forEach(i => {
+            const d = document.createElement('div'); d.className = "pkg-item";
+            d.onclick = () => { document.querySelectorAll('.pkg-item').forEach(p=>p.classList.remove('selected')); d.classList.add('selected'); };
+            d.innerHTML = `<b>${i.a}</b><br><span style="color:#ff6600">${i.p}</span>`; grid.appendChild(d);
+        });
+        document.getElementById('topupModal').style.display = 'flex';
+    }
+
+    function applyVoucher() {
+        const code = document.getElementById('voucherCode').value.toUpperCase();
+        const msg = document.getElementById('voucherMsg');
+        if(code === "NEWYEAR2026") {
+            isVoucherApplied = true;
+            msg.style.color = "green";
+            msg.innerText = "✓ Voucher Applied! ₱5 Discount included.";
+        } else {
+            isVoucherApplied = false;
+            msg.style.color = "red";
+            msg.innerText = "× Invalid Voucher Code";
+        }
+    }
+
+    function closeModal() { document.getElementById('topupModal').style.display = 'none'; }
+    function doSearch() {
+        let q = document.getElementById('gameSearch').value.toLowerCase();
+        let cards = document.getElementsByClassName('game-card');
+        for(let c of cards) c.style.display = c.innerText.toLowerCase().includes(q) ? "block" : "none";
+    }
+    function handleOrder() {
+        const id = document.getElementById('userId').value;
+        const sel = document.querySelector('.pkg-item.selected');
+        if(!id || !sel) return alert("Select a package and enter your ID!");
+        const pkgText = sel.innerText.replace('\n', ' ');
+        const vText = isVoucherApplied ? "%0A*VOUCHER APPLIED: NEWYEAR2026 (-₱5)*" : "";
+        const msg = `GAMES FIRES ORDER%0A%0AGame: ${db[currentKey].n}%0AAccount ID: ${id}%0AOrder: ${pkgText}${vText}%0A%0A*I have scanned your QR and paid! I agree to the terms.*`;
+        window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
+    }
+</script>
 </body>
 </html>
